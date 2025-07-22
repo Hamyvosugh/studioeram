@@ -15,7 +15,11 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/assist": "^4.4.4",
     "@sanity/vision": "^3.99.0",
+    "@types/qrcode": "^1.5.5",
+    "openai": "^5.9.2",
+    "qrcode": "^1.5.4",
     "react": "^19.1",
     "react-dom": "^19.1",
     "sanity": "^3.99.0",
