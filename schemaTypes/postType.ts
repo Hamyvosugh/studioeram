@@ -169,7 +169,13 @@ export const postType = defineType({
       description: 'آیا این پست مهم و ویژه است؟',
       initialValue: false,
     }),
-
+    defineField({
+      name: 'heroShow',
+      title: 'پخش در هرو',
+      type: 'boolean',
+      description: 'آیا این پست در بخش هرو (صفحه اول) نمایش داده شود؟',
+      initialValue: false,
+    }),
     // Tags field
     defineField({
       name: 'tags',
@@ -845,6 +851,7 @@ export const postType = defineType({
       title: 'title',
       author: 'author.name',
       important: 'important',
+      heroShow: 'heroShow',
       category: 'category.title',
       region: 'region.title',
       topic: 'topic.title',
@@ -852,10 +859,11 @@ export const postType = defineType({
       expireAt: 'expireAt',
       media: 'image',
     },
-    prepare({title, author, important, category, region, topic, trackingId, expireAt, media}) {
+   prepare({title, author, important, heroShow, category, region, topic, trackingId, expireAt, media}) {      
       const subtitle = [
         trackingId && `🔍 ${trackingId}`,
-        important && '⭐ مهم',
+        important && ' مهم',
+        heroShow && '🎯 هرو',
         category && `📂 ${category}`,
         region && `🌍 ${region}`,
         topic && `🏷️ ${topic}`,

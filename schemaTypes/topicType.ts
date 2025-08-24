@@ -17,7 +17,7 @@ export const topicType = defineType({
           {title: 'خبر', value: 'news'},
           {title: 'پادکست', value: 'podcast'},
           {title: 'برنامه', value: 'program'},
-          {title: 'برنامه تلویزیونی', value: 'show'}, // موضوع جدید اضافه شد
+          {title: 'برنامه تلویزیونی', value: 'show'},
         ],
       },
     }),
@@ -40,10 +40,10 @@ export const topicType = defineType({
       options: {
         list: [
           {title: 'قرمز (زنده)', value: '#ef4444'},
-          {title: 'آبی (خبر)', value: '#3b82f6'},
+          {title: 'آبی (خبر)', value: '#64748b'},
           {title: 'بنفش (پادکست)', value: '#8b5cf6'},
           {title: 'سبز (برنامه)', value: '#10b981'},
-          {title: 'نارنجی (برنامه تلویزیونی)', value: '#f97316'}, // رنگ جدید برای show
+          {title: 'نارنجی (برنامه تلویزیونی)', value: '#f97316'},
           {title: 'صورتی', value: '#ec4899'},
           {title: 'خاکستری', value: '#6b7280'},
         ],
@@ -62,7 +62,7 @@ export const topicType = defineType({
           {title: '📰 روزنامه (خبر)', value: 'newspaper'},
           {title: '🎧 هدفون (پادکست)', value: 'headphones'},
           {title: '🎬 کلاپر (برنامه)', value: 'clapperboard'},
-          {title: '🎭 تئاتر (برنامه تلویزیونی)', value: 'theater'}, // آیکون جدید برای show
+          {title: '🎭 تئاتر (برنامه تلویزیونی)', value: 'theater'},
         ],
       },
     }),
@@ -83,7 +83,8 @@ export const topicType = defineType({
         list: [
           {title: 'پست‌ها (اخبار)', value: 'post'},
           {title: 'برنامه‌های تلویزیونی', value: 'show'},
-          {title: 'هر دو', value: 'both'},
+          {title: 'پادکست‌ها', value: 'podcast'},
+          {title: 'همه', value: 'all'},
         ],
         layout: 'radio',
       },
@@ -102,7 +103,8 @@ export const topicType = defineType({
       const contentTypeLabels: {[key: string]: string} = {
         post: 'پست‌ها',
         show: 'برنامه‌ها',
-        both: 'هر دو',
+        podcast: 'پادکست‌ها',
+        all: 'همه',
       };
       
       const contentTypeText = contentTypeLabels[contentType] || contentType;

@@ -284,6 +284,13 @@ export const showType = defineType({
       description: 'آیا این برنامه در بخش ویژه نمایش داده شود؟',
       initialValue: false,
     }),
+    defineField({
+      name: 'heroShow',
+      title: 'پخش در هرو',
+      type: 'boolean',
+      description: 'آیا این برنامه در بخش هرو (صفحه اول) نمایش داده شود؟',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
@@ -296,8 +303,9 @@ export const showType = defineType({
       media: 'poster',
       isActive: 'isActive',
       featured: 'featured',
+      heroShow: 'heroShow',
     },
-    prepare({title, shortDescription, startYear, endYear, status, categories, media, isActive, featured}) {
+    prepare({title, shortDescription, startYear, endYear, status, categories, media, isActive, featured, heroShow}) {
       const yearRange = endYear ? `${startYear}-${endYear}` : `${startYear}-اکنون`;
       const statusLabels: {[key: string]: string} = {
         ongoing: 'در حال پخش',
@@ -318,6 +326,9 @@ export const showType = defineType({
       }
       if (featured) {
         subtitle += ' | ویژه';
+      }
+      if (heroShow) {
+        subtitle += ' | هرو';
       }
       
       return {

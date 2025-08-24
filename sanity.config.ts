@@ -4,6 +4,7 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import { assist } from '@sanity/assist'
+import {structure} from './structure' // خط جدید اضافه کن
 
 export default defineConfig({
   name: 'default',
@@ -12,15 +13,18 @@ export default defineConfig({
   projectId: '1gmrejh5',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool(), assist()],
+  plugins: [
+    structureTool({structure}), // این خط رو تغییر بده
+    visionTool(), 
+    assist()
+  ],
 
   schema: {
     types: schemaTypes,
   },
 
-  // فعال کردن Scheduled Publishing
   scheduledPublishing: {
     enabled: true,
-    inputDateTimeFormat: 'dd/MM/yyyy HH:mm', // فرمت تاریخ فارسی
+    inputDateTimeFormat: 'dd/MM/yyyy HH:mm',
   },
 })

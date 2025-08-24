@@ -24,10 +24,10 @@ export const episodeType = defineType({
           // فقط فصل‌های مربوط به برنامه انتخاب شده نمایش داده شوند
           return {
             filter: 'show._ref == $showId',
-            params: {showId: document?.show?._ref}
+            params: {showId: document?.show?._ref},
           }
-        }
-      }
+        },
+      },
     }),
     defineField({
       name: 'episodeNumber',
@@ -49,12 +49,12 @@ export const episodeType = defineType({
       type: 'slug',
       options: {
         source: (doc: any) => {
-          const showTitle = doc.show?.title || 'show';
-          const seasonNumber = doc.season?.seasonNumber || 'season';
-          const episodeNumber = doc.episodeNumber || 'episode';
-          const episodeTitle = doc.title || '';
-          
-          return `${showTitle}-s${seasonNumber}e${episodeNumber}-${episodeTitle}`;
+          const showTitle = doc.show?.title || 'show'
+          const seasonNumber = doc.season?.seasonNumber || 'season'
+          const episodeNumber = doc.episodeNumber || 'episode'
+          const episodeTitle = doc.title || ''
+
+          return `${showTitle}-s${seasonNumber}e${episodeNumber}-${episodeTitle}`
         },
       },
       validation: (rule) => rule.required(),
@@ -84,6 +84,7 @@ export const episodeType = defineType({
       validation: (rule) => rule.required(),
       description: 'تصویر شاخص این اپیزود',
     }),
+
     defineField({
       name: 'video',
       title: 'ویدیو اپیزود',
@@ -115,26 +116,28 @@ export const episodeType = defineType({
             accept: 'video/*',
           },
           hidden: ({parent}) => parent?.videoType !== 'upload',
-          validation: (rule) => rule.custom((value, context) => {
-            const videoType = (context.parent as any)?.videoType;
-            if (videoType === 'upload' && !value) {
-              return 'فایل ویدیو الزامی است';
-            }
-            return true;
-          }),
+          validation: (rule) =>
+            rule.custom((value, context) => {
+              const videoType = (context.parent as any)?.videoType
+              if (videoType === 'upload' && !value) {
+                return 'فایل ویدیو الزامی است'
+              }
+              return true
+            }),
         },
         {
           name: 'videoUrl',
           title: 'لینک ویدیو',
           type: 'url',
           hidden: ({parent}) => parent?.videoType === 'upload',
-          validation: (rule) => rule.custom((value, context) => {
-            const videoType = (context.parent as any)?.videoType;
-            if (videoType !== 'upload' && !value) {
-              return 'لینک ویدیو الزامی است';
-            }
-            return true;
-          }),
+          validation: (rule) =>
+            rule.custom((value, context) => {
+              const videoType = (context.parent as any)?.videoType
+              if (videoType !== 'upload' && !value) {
+                return 'لینک ویدیو الزامی است'
+              }
+              return true
+            }),
         },
         {
           name: 'quality',
@@ -326,6 +329,13 @@ export const episodeType = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'heroShow',
+      title: 'پخش در هرو',
+      type: 'boolean',
+      description: 'آیا این اپیزود در بخش هرو (صفحه اول) نمایش داده شود؟',
+      initialValue: false,
+    }),
+    defineField({
       name: 'isActive',
       title: 'فعال',
       type: 'boolean',
@@ -351,39 +361,43 @@ export const episodeType = defineType({
       media: 'thumbnail',
       isActive: 'isActive',
       featured: 'featured',
+      heroShow: 'heroShow',
       airDate: 'airDate',
     },
-    prepare({title, show, seasonNumber, episodeNumber, duration, status, media, isActive, featured, airDate}) {
+    prepare({title, show, seasonNumber, episodeNumber, duration, status, media, isActive, featured, heroShow, airDate}) {
       const statusLabels: {[key: string]: string} = {
         draft: 'پیش‌نویس',
         published: 'منتشر شده',
         scheduled: 'برنامه‌ریزی شده',
         archived: 'بایگانی شده',
-      };
-      
-      const statusText = statusLabels[status] || status;
-      const durationText = duration ? `${duration} دقیقه` : '';
-      
-      let displayTitle = `${title}`;
-      if (show && seasonNumber && episodeNumber) {
-        displayTitle = `${show} - S${seasonNumber}E${episodeNumber}: ${title}`;
       }
-      
-      let subtitle = statusText;
+
+      const statusText = statusLabels[status] || status
+      const durationText = duration ? `${duration} دقیقه` : ''
+
+      let displayTitle = `${title}`
+      if (show && seasonNumber && episodeNumber) {
+        displayTitle = `${show} - S${seasonNumber}E${episodeNumber}: ${title}`
+      }
+
+      let subtitle = statusText
       if (durationText) {
-        subtitle += ` | ${durationText}`;
+        subtitle += ` | ${durationText}`
       }
       if (airDate) {
-        const airDateFormatted = new Date(airDate).toLocaleDateString('fa-IR');
-        subtitle += ` | ${airDateFormatted}`;
+        const airDateFormatted = new Date(airDate).toLocaleDateString('fa-IR')
+        subtitle += ` | ${airDateFormatted}`
       }
       if (!isActive) {
-        subtitle += ' | غیرفعال';
+        subtitle += ' | غیرفعال'
       }
       if (featured) {
-        subtitle += ' | ویژه';
+        subtitle += ' | ویژه'
       }
-      
+      if (heroShow) {
+  subtitle += ' | هرو';
+}
+
       return {
         title: displayTitle,
         subtitle: subtitle,
@@ -398,29 +412,23 @@ export const episodeType = defineType({
       by: [
         {field: 'show.title', direction: 'asc'},
         {field: 'season.seasonNumber', direction: 'asc'},
-        {field: 'episodeNumber', direction: 'asc'}
-      ]
+        {field: 'episodeNumber', direction: 'asc'},
+      ],
     },
     {
       title: 'جدیدترین اپیزودها',
       name: 'byPublishedDate',
-      by: [
-        {field: 'publishedAt', direction: 'desc'}
-      ]
+      by: [{field: 'publishedAt', direction: 'desc'}],
     },
     {
       title: 'بر اساس تاریخ پخش',
       name: 'byAirDate',
-      by: [
-        {field: 'airDate', direction: 'desc'}
-      ]
+      by: [{field: 'airDate', direction: 'desc'}],
     },
     {
       title: 'محبوب‌ترین',
       name: 'byViewCount',
-      by: [
-        {field: 'viewCount', direction: 'desc'}
-      ]
-    }
-  ]
+      by: [{field: 'viewCount', direction: 'desc'}],
+    },
+  ],
 })

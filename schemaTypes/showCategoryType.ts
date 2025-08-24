@@ -85,6 +85,13 @@ export const showCategoryType = defineType({
       description: 'آیا این دسته‌بندی در سایت نمایش داده شود؟',
       initialValue: true,
     }),
+    defineField({
+      name: 'isVisible',
+      title: 'نمایش محتوا در صفحه اصلی',
+      type: 'boolean',
+      description: 'آیا محتوای این دسته‌بندی در صفحه اصلی به صورت ردیف جداگانه نمایش داده شود؟',
+      initialValue: true,
+    }),
   ],
   preview: {
     select: {
